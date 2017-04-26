@@ -1,7 +1,0 @@
-﻿  Source.cpp
-  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
-  - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
-  - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
-  Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
-c:\users\todd\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\source.cpp(75): warning C4715: 'lookup': not all control paths return a value
-  ConsoleApplication1.vcxproj -> C:\Users\Todd\Documents\Visual Studio 2015\Projects\ConsoleApplication1\x64\Debug\ConsoleApplication1.dll

@@ -1,4 +1,0 @@
-﻿  Source.cpp
-c:\users\todd\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\source.cpp(3): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
-  c:\users\todd\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1\source.cpp(3): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
-  ConsoleApplication1.vcxproj -> C:\Users\Todd\Documents\Visual Studio 2015\Projects\ConsoleApplication1\Debug\ConsoleApplication1.dll
