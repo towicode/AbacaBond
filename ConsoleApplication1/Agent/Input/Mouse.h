@@ -1,11 +1,16 @@
 #pragma once
 
-#include "jni.h"
+#include <jni.h>
 #include "Normal.h"
-#include "Environment.h"
-#include "LoadClasses.h"
+#include "BezierCurve.h"
+#include "../Basic/Environment.h"
+#include "../Basic/LoadClasses.h"
 
 #include <string>
+#include <Windows.h>
+
+using boost::asio::ip::tcp;
+namespace pt = boost::posix_time;
 
 //	Mouse Stuff.
 jfieldID canvas_field;	// Game Client Field
@@ -29,70 +34,7 @@ int mousex = 0;
 int mousey = 0;
 
 
-/// <summary>
-/// Moves the mouse.
-/// </summary>
-/// <param name="x">The x.</param>
-/// <param name="y">The y.</param>
-/// <param name="agent">The agent.</param>
-void MoveMouse(int x, int y, Environment agent) {
-	//Accuracy to desired pixel
-	int Acc = 3;
 
-	int targetX = x + (int)(Acc * targetDistribution.NextGaussian());
-	int targetY = y + (int)(Acc * targetDistribution.NextGaussian());
-
-	//Declare the original pointer position
-	int originalX = mousex;
-	int originalY = mousey;
-
-	//Find a mid point between original and target position
-	int midPointX = (x - targetX) / 2;
-	int midPointY = (y - targetY) / 2;
-
-	//Points normal to the straight line between start and end point
-	int factor = 6;
-	int bezierMidPointX = (int)((midPointX / factor) * (midpointDistribution.NextGaussian()));
-	int bezierMidPointY = (int)((midPointY / factor) * (midpointDistribution.NextGaussian()));
-
-	BezierCurve bc;
-	double input[] = { originalX, originalY, bezierMidPointX, bezierMidPointY, targetX, targetY };
-
-	//Change numberOfPoints for more or less control points
-	const int numberOfPoints = 500;
-
-	//Don't change numberOfDataPoints
-	const int numberOfDataPoints = numberOfPoints * 2;
-	double output[numberOfDataPoints];
-
-	//control points are couplets of two so / 2
-	bc.Bezier2D(input, numberOfDataPoints / 2, output);
-
-	/*for (int i = 0; i < 1000; i++){
-	std::cout << output[i] << std::endl;
-	}*/
-
-	//std::vector<POINT> points;
-	POINT A;
-
-	for (int count = 1; count != numberOfDataPoints - 1; count += 2)
-	{
-		A.x = (int)output[count + 1];
-		A.y = (int)output[count];
-
-		//points.push_back(A);
-
-		sendMouseMovement(A.x, A.y, agent);
-		//clickMouse(jvmti, env);
-
-		////Testing - sleep for a vaule between 0-20
-		Sleep(20);
-		////
-
-	}
-
-	//return points;
-}
 
 
 /// <summary>
@@ -161,6 +103,68 @@ static std::string sendMouseMovement(int xx, int yy, Environment agent) {
 		return message;
 	}
 	agent.env->CallVoidMethod(mouse_motion_proper, move_event, my_event);
+}
+
+/// <summary>
+/// Moves the mouse.
+/// </summary>
+/// <param name="x">The x.</param>
+/// <param name="y">The y.</param>
+/// <param name="agent">The agent.</param>
+void MoveMouse(int x, int y, Environment agent) {
+	//Accuracy to desired pixel
+	int Acc = 3;
+
+	int targetX = x + (int)(Acc * targetDistribution.NextGaussian());
+	int targetY = y + (int)(Acc * targetDistribution.NextGaussian());
+
+	//Declare the original pointer position
+	int originalX = mousex;
+	int originalY = mousey;
+
+	//Find a mid point between original and target position
+	int midPointX = (x - targetX) / 2;
+	int midPointY = (y - targetY) / 2;
+
+	//Points normal to the straight line between start and end point
+	int factor = 6;
+	int bezierMidPointX = (int)((midPointX / factor) * (midpointDistribution.NextGaussian()));
+	int bezierMidPointY = (int)((midPointY / factor) * (midpointDistribution.NextGaussian()));
+
+	BezierCurve bc;
+	double input[] = { originalX, originalY, bezierMidPointX, bezierMidPointY, targetX, targetY };
+
+	//Change numberOfPoints for more or less control points
+	const int numberOfPoints = 500;
+
+	//Don't change numberOfDataPoints
+	const int numberOfDataPoints = numberOfPoints * 2;
+	double output[numberOfDataPoints];
+
+	//control points are couplets of two so / 2
+	bc.Bezier2D(input, numberOfDataPoints / 2, output);
+
+
+	//std::vector<POINT> points;
+	POINT A;
+
+	for (int count = 1; count != numberOfDataPoints - 1; count += 2)
+	{
+		A.x = (int)output[count + 1];
+		A.y = (int)output[count];
+
+		//points.push_back(A);
+
+		sendMouseMovement(A.x, A.y, agent);
+		//clickMouse(jvmti, env);
+
+		////Testing - sleep for a vaule between 0-20
+		Sleep(20);
+		////
+
+	}
+
+	//return points;
 }
 
 

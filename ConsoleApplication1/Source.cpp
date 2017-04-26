@@ -1,23 +1,28 @@
 #pragma warning(disable:4996)
 
+#include <boost/asio.hpp>
+#include <boost/array.hpp>
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <jni.h>
+#include <jvmti.h>
 
-#include "LoadClasses.h"
-#include "Mouse.h"
+#include "agent/Basic/Environment.h"
+#include "agent/Basic/LoadClasses.h"
+#include "agent/Input/mouse.h"
 
-#include "jni.h"
-#include "jvmti.h"
-#include "BezierCurve.h"
-#include "Normal.h"
-#include "Environment.h"
+
+#include "agent/Input/BezierCurve.h"
+#include "agent/Input/Normal.h"
+#include "agent/Basic/Environment.h"
 
 #include <iostream>
 #include <string>
 
-#include <boost/asio.hpp>
-#include <boost/array.hpp>
+
 #include <Windows.h>
 
 
@@ -72,6 +77,7 @@ static std::string lookup(int command, jvmtiEnv *jvmti, JNIEnv *env) {
 
 	case 2:
 		//return moveMouse(jvmti, env);
+		return nullptr;
 	}
 
 }
