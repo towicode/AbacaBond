@@ -154,13 +154,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BezierCurve.cpp" />
+    <ClCompile Include="Normal.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jawt_md.h" />
-    <ClInclude Include="jni.h" />
-    <ClInclude Include="jni_md.h" />
-    <ClInclude Include="jvmti.h" />
+    <ClInclude Include="BezierCurve.h" />
+    <ClInclude Include="Environment.h" />
+    <ClInclude Include="LoadClasses.h" />
+    <ClInclude Include="Normal.h" />
+    <ClInclude Include="Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Injection.java" />

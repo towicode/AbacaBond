@@ -15,21 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jawt_md.h">
+    <ClInclude Include="BezierCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="jni.h">
+    <ClInclude Include="Normal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="jni_md.h">
+    <ClInclude Include="Environment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="jvmti.h">
+    <ClInclude Include="LoadClasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Normal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
