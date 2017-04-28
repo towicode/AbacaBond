@@ -179,13 +179,13 @@ void MoveMouse(int x, int y, Environment agent) {
 /// <returns></returns>
 static std::string setupMouse(Environment agent) {
 
-	canvas_field = agent.env->GetStaticFieldID(Client, localCanvasField, CanvasObf);
+	canvas_field = agent.env->GetStaticFieldID(CanvasHolder, localCanvasField, CanvasObf);
 	if (!canvas_field) {
 		std::string messages = "ERROR no canvas field\n";
 		return messages;
 	}
 
-	local_canvas = agent.env->GetStaticObjectField(Client, canvas_field);
+	local_canvas = agent.env->GetStaticObjectField(CanvasHolder, canvas_field);
 	if (!local_canvas) {
 		std::string message = "ERROR couldn't grab local canvas\n";
 		return message;

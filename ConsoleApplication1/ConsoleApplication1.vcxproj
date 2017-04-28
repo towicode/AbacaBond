@@ -168,6 +168,8 @@
     <ClInclude Include="Agent\Input\BezierCurve.h" />
     <ClInclude Include="Agent\Input\Mouse.h" />
     <ClInclude Include="Agent\Input\Normal.h" />
+    <ClInclude Include="obfinfo.h" />
+    <ClInclude Include="Players.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

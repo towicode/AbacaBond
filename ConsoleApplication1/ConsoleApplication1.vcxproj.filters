@@ -49,5 +49,11 @@
     <ClInclude Include="Agent\Input\Normal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Players.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obfinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

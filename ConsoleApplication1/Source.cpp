@@ -19,6 +19,8 @@
 #include "agent/Input/Normal.h"
 #include "agent/Basic/Environment.h"
 
+#include "Players.h";
+
 #include <iostream>
 #include <string>
 
@@ -33,8 +35,6 @@ namespace pt = boost::posix_time;
 unsigned short const PORT = 19876;
 
 Environment agent;
-
-
 
 static std::string getMyRSPlayer(jvmtiEnv *jvmti, JNIEnv *env) {
 
@@ -68,12 +68,13 @@ static std::string getMyRSPlayer(jvmtiEnv *jvmti, JNIEnv *env) {
 }
 
 
-static std::string lookup(int command, jvmtiEnv *jvmti, JNIEnv *env) {
+static std::string lookup(int command, Environment agent) {
 
 
 	switch (command) {
 	case 1:
-		return getMyRSPlayer(jvmti, env);
+		//return "abc";
+		return getPlayers(agent);
 
 	case 2:
 		//return moveMouse(jvmti, env);
@@ -103,7 +104,7 @@ Agent_OnLoad(JavaVM *vm, char *options, void *reserved)
 	
 	agent.fromVM(vm);
 	loadClasses(agent);
-	setupMouse(agent);
+	//setupMouse(agent);
 
 	try
 	{
@@ -126,7 +127,7 @@ Agent_OnLoad(JavaVM *vm, char *options, void *reserved)
 			std::cout.write(cBuf.data(), len);
 
 			// Send string to client
-			std::string message = lookup(2, agent.jvmti, agent.env);
+			std::string message = lookup(1, agent);
 			boost::asio::write(socket, boost::asio::buffer(message));
 
 		}
