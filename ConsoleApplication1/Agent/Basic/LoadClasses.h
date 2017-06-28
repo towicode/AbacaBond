@@ -4,6 +4,7 @@
 #include "jvmti.h"
 #include "Environment.h"
 #include "obfinfo.h"
+#include <unordered_map>
 
 #include <string>
 
@@ -12,7 +13,6 @@
 jclass PlayerHolder;
 jclass CanvasHolder;
 jclass Character;
-jclass CharacterArray;
 jclass Canvas;
 jclass MouseEvent;
 jclass MouseListener;
@@ -20,11 +20,19 @@ jclass MouseMotionListener;
 jclass Client;
 
 
+jclass localPlayerHolder;
+jclass canvasHolder;
 
 
-
-
-
+void attemptLoad(int *cur, jclass *fill, std::string name, std::unordered_map<std::string, jclass> *mymap) {
+	try {
+		*fill = mymap -> at(MouseEventObf);
+	}
+	catch (...) {
+		
+	}
+	*cur--;
+}
 
 
 /// <summary>
@@ -40,7 +48,11 @@ void loadClasses(Environment agent) {
 	jvmtiError err;
 	agent.jvmti->GetLoadedClasses(&classCount, &classes);
 
-	int expected_classes = 8;
+
+	std::unordered_map<std::string, jclass> mymap;
+	std::pair<std::string, jclass> myshopping("baking powder", Client);
+	mymap.insert(myshopping);
+
 
 	for (int i = 0; i < classCount; i++) {
 		jclass cls = *(classes + i);
@@ -50,67 +62,27 @@ void loadClasses(Environment agent) {
 		if (err == JVMTI_ERROR_NONE) {
 			//printf("THE dog: %s \n", signature);
 			// Just be simple and look for our classes...
+
+			std::pair<std::string, jclass> classmatch(signature, cls);
+			mymap.insert(classmatch);
 			
-
-			if (strstr(signature, ClientObf) != NULL) {
-				printf("Found Client Class\n");
-				expected_classes--;
-				Client = cls;
-			}
-
-			if (strstr(signature, PlayerHolderObf) != NULL) {
-				printf("Found PlayerHolderObf Class\n");
-				expected_classes--;
-				PlayerHolder = cls;
-			}
-
-			if (strstr(signature, CanvasHolderObf) != NULL) {
-				printf("Found CanvasHolder Class\n");
-				expected_classes--;
-				CanvasHolder = cls;
-			}
-
-			if (strstr(signature, CharacterObf) != NULL) {
-
-				if (strstr(signature, "[") != NULL) {
-					continue;
-				}
-				printf("Found Character Class\n");
-				expected_classes--;
-				Character = cls;
-			}
-
-			if (strstr(signature, CanvasObf) != NULL) {
-				printf("Found Canvas Class\n");
-				expected_classes--;
-				Canvas = cls;
-			}
-
-			if (strstr(signature, MouseEventObf) != NULL) {
-				printf("Found MouseEvent Class\n");
-				expected_classes--;
-				MouseEvent = cls;
-			}
-
-			if (strstr(signature, MouseListenerObf) != NULL) {
-				printf("Found MouseListener Class\n");
-				expected_classes--;
-				MouseListener = cls;
-			}
-
-			if (strstr(signature, MouseMotionListenerObf) != NULL) {
-				printf("Found MouseMotionListener Class\n");
-				expected_classes--;
-				MouseMotionListener = cls;
-			}
-
 		}
 		else {
 			fprintf(stderr, "Couldn't check class :(\n");
 		}
 	}
+	int expected_classes = 8;
+	attemptLoad(&expected_classes, &MouseEvent, MouseEventObf, &mymap);
+	attemptLoad(&expected_classes, &MouseMotionListener, MouseListenerObf, &mymap);
+	attemptLoad(&expected_classes, &Canvas, CanvasObf, &mymap);
+	attemptLoad(&expected_classes, &MouseListener, MouseListenerObf, &mymap);
+	attemptLoad(&expected_classes, &localPlayerHolder, localPlayerHolderObf, &mymap);
+	attemptLoad(&expected_classes, &canvasHolder, canvasHolderObf, &mymap);
+	attemptLoad(&expected_classes, &MouseEvent, MouseEventObf, &mymap);
+	attemptLoad(&expected_classes, &MouseEvent, MouseEventObf, &mymap);
+	attemptLoad(&expected_classes, &MouseEvent, MouseEventObf, &mymap);
 
-	if (expected_classes != 0) {
-		printf("One more more classes not found");
-	}
+
+
+
 }

@@ -13,7 +13,14 @@ char* CanvasObf = "Ljava/awt/Canvas;";
 char* MouseListenerObf = "Ljava/awt/event/MouseListener;";
 char* MouseMotionListenerObf = "Ljava/awt/event/MouseMotionListener;";
 char* MouseEventObf = "Ljava/awt/event/MouseEvent;";
-char* ComponentObf = "Ljava/awt/Component;";
+
+
+char * localPlayerHolderObf = "Lf;";
+char * localPlayerAcessor = "hb";
+
+
+char * canvasHolderObf = "Lbb;";
+char * canvasAcessor = "qz";
 
 
 
